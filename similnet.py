@@ -210,7 +210,7 @@ def shared_dataset(data_xy, borrow=True):
     # floats it doesn't make sense) therefore instead of returning
     # ``shared_y`` we will have to cast it to int. This little hack
     # lets ous get around this issue
-    return shared_x, T.cast(shared_y, 'int32')
+    return shared_x, T.cast(shared_y, 'int64')
 
 def generate_pairs(label, n_pairs, positive_ratio, replace=False, random_state=42):
     """Generate a set of pair indices
