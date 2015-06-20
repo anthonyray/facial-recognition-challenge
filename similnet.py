@@ -310,6 +310,13 @@ def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=1000,
 
     n_inputs = X_train.shape[1]
 
+    X_train = X_train.astype(np.float32)
+    X_test = X_test.astype(np.float32)
+
+    y_train = y_train.astype(np.int32)
+    y_test = y_test.astype(np.int32)
+
+
     X_train, y_train = shared_dataset((X_train,y_train))
     X_test, y_test = shared_dataset((X_test,y_test))
 
