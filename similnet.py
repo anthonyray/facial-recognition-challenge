@@ -308,6 +308,7 @@ def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=1000,
     n_valid_batches = X_val.shape[0] / batch_size
     n_test_batches = X_test.shape[0] / batch_size
 
+    n_inputs = X_train.shape[1]
 
     X_train, y_train = shared_dataset((X_train,y_train))
     X_test, y_test = shared_dataset((X_test,y_test))
@@ -324,8 +325,6 @@ def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=1000,
                         # [int] labels
 
     rng = numpy.random.RandomState(1234)
-
-    n_inputs = X_train.shape[1]
 
     # construct the MLP class
     classifier = MLP(
