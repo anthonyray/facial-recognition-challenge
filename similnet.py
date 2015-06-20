@@ -274,9 +274,9 @@ def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=1000,
     X_ = np.concatenate((X[pairs_idx[:,0],:],X[pairs_idx[:,1],:]),axis=1)
 
 
-    X_train, y_train, X_test, y_test = train_test_split(X_,y)
+    X_train, y_train, X_test, y_test = train_test_split(X_,y,test_size=0.25)
 
-    pairs_val_idx, y_val = generate_pairs(labels, 50 , 0.5, replace=False, random_state=42)
+    pairs_val_idx, y_val = generate_pairs(labels, 100 , 0.5, replace=False, random_state=42)
     X_val = np.concatenate((X[pairs_val_idx[:,0],:],X[pairs_val_idx[:,1],:]),axis=1)
 
     # compute number of minibatches for training, validation and testing
