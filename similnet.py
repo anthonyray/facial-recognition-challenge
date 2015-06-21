@@ -427,7 +427,7 @@ def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=1000,
                            # found
     improvement_threshold = 0.995  # a relative improvement of this much is
                                    # considered significant
-    #validation_frequency = min(n_train_batches, patience / 2)
+    validation_frequency = min(n_train_batches, patience / 2)
                                   # go through this many
                                   # minibatche before checking the network
                                   # on the validation set; in this case we
