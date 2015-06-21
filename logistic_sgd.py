@@ -166,7 +166,7 @@ class LogisticRegression(object):
             raise NotImplementedError()
 
     def get_distance(self):
-      return self.p_y_given_x
+      return self.y_pred
 
 
 def load_data(dataset):
