@@ -298,7 +298,7 @@ def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=1000,
     X_ = np.concatenate((X[pairs_idx[:,0],:],X[pairs_idx[:,1],:]),axis=1)
 
 
-    X_train, X_test, y_train, y_test = train_test_split(X_,y,test_size=0.25)
+    X_train, X_test, y_train, y_test = train_test_split(X_,y,test_size=0.20)
 
     pairs_val_idx, y_val = generate_pairs(labels, 100 , 0.5, replace=False, random_state=42)
     X_val = np.concatenate((X[pairs_val_idx[:,0],:],X[pairs_val_idx[:,1],:]),axis=1)
@@ -312,13 +312,23 @@ def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=1000,
 
     X_train = X_train.astype(np.float32)
     X_test = X_test.astype(np.float32)
+    X_val = X_val.astype(np.float32)
 
     y_train = y_train.astype(np.int32)
     y_test = y_test.astype(np.int32)
+    y_val = y_val.astype(np.int32)
 
+
+    print "X_train shape : " + str(X_train.shape)
+    print "X_test shape : " + str(X_test.shape)
+    print "X_val shape : " + str(X_val.shape)
+    print "y_train shape : " + str(y_train.shape)
+    print "y_test shape : " + str(y_train.shape)
+    print "y_val shape : " + str(y_val.shape)
 
     X_train, y_train = shared_dataset((X_train,y_train))
     X_test, y_test = shared_dataset((X_test,y_test))
+    X_val, y_val = shared_dataset((X_val,y_val))
 
     ######################
     # BUILD ACTUAL MODEL #
