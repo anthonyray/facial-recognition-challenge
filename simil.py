@@ -103,7 +103,7 @@ def generate_pairs(label, n_pairs, positive_ratio, replace=False, random_state=4
     return pairs_idx, pairs_label.reshape(-1)
 
 
-def load_face_data(dataset):
+def load_face_data():
     train_facile = io.loadmat('data/data_train_facile.mat')
     X = train_facile['X']
     labels = train_facile['label']
@@ -111,7 +111,7 @@ def load_face_data(dataset):
     print "Normalizing data"
     X = normalize(X)
 
-    n_train_pairs = 1000
+    n_train_pairs = 6000
     print "Generating " + str(n_train_pairs) + " training pairs."
     pairs_idx, y  = generate_pairs(labels, n_train_pairs, 0.5, replace=False, random_state=42)
 
@@ -120,7 +120,7 @@ def load_face_data(dataset):
 
     X_train, X_test, y_train, y_test = train_test_split(X_,y,test_size=0.20)
 
-    pairs_val_idx, y_val = generate_pairs(labels, 100 , 0.5, replace=False, random_state=42)
+    pairs_val_idx, y_val = generate_pairs(labels, 1000 , 0.5, replace=False, random_state=42)
     X_val = np.concatenate((X[pairs_val_idx[:,0],:],X[pairs_val_idx[:,1],:]),axis=1)
 
     # compute number of minibatches for training, validation and testing
@@ -294,7 +294,7 @@ def compile_model(n_in, n_classes, n_hidden, learning_rate, L1_reg, L2_reg):
 
 def main(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=1000,
              dataset='mnist.pkl.gz', n_hidden=500):
-    train_examples, dev_examples, test_examples = load_data(dataset)
+    train_examples, dev_examples, test_examples = load_face_data()
     print '... building the model'
     train_model, evaluate_model = compile_model(28*28, 10, n_hidden, learning_rate, L1_reg, L2_reg)
     print '... training'
