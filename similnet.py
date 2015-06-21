@@ -292,7 +292,7 @@ def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=10000,
     print "Normalizing data"
     X = normalize(X)
 
-    n_train_pairs = 100000
+    n_train_pairs = 10000
     print "Generating " + str(n_train_pairs) + " training pairs."
     pairs_idx, y  = generate_pairs(labels, n_train_pairs, 0.5, replace=False, random_state=42)
 
