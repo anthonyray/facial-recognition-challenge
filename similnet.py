@@ -292,7 +292,7 @@ def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=10000,
     print "Normalizing data"
     X = normalize(X)
 
-    n_train_pairs = 1000
+    n_train_pairs = 6000 #60000
     print "Generating " + str(n_train_pairs) + " training pairs."
     pairs_idx, y  = generate_pairs(labels, n_train_pairs, 0.5, replace=False, random_state=42)
 
@@ -301,7 +301,7 @@ def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=10000,
 
     X_train, X_test, y_train, y_test = train_test_split(X_,y,test_size=0.20)
 
-    pairs_val_idx, y_val = generate_pairs(labels, 100 , 0.5, replace=False, random_state=42)
+    pairs_val_idx, y_val = generate_pairs(labels, 1000 , 0.5, replace=False, random_state=42)  #10000
     X_val = np.concatenate((X[pairs_val_idx[:,0],:],X[pairs_val_idx[:,1],:]),axis=1)
 
     # compute number of minibatches for training, validation and testing
@@ -504,17 +504,12 @@ def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=10000,
 
     print "Predicting on the test set : "
 
-    predict = theano.function(
-        inputs=[index],
-        outputs=classifier.dist,
-        givens={
-            x: X_val[index * batch_size:(index + 1) * batch_size],
-            y: y_val[index * batch_size:(index + 1) * batch_size]
-        }
+    evaluate_model = theano.function(
+        inputs=[x,y],
+        outputs=classifier.logRegressionLayer.p_y_given_x[0]
     )
 
-    prediction = predict()
-    print prediction
+    print evaluate_model(x,y)
 
 if __name__ == '__main__':
     test_mlp()
