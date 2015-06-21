@@ -182,6 +182,7 @@ class MLP(object):
         # same holds for the function computing the number of errors
         self.errors = self.logRegressionLayer.errors
 
+        self.dist = self.logRegressionLayer.get_distance
         # the parameters of the model are the parameters of the two layer it is
         # made out of
         self.params = self.hiddenLayer.params + self.logRegressionLayer.params
@@ -505,13 +506,15 @@ def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=10000,
 
     predict = theano.function(
         inputs=[index],
-        outputs=classifier.errors(y),
+        outputs=classifier.dist,
         givens={
             x: X_val[index * batch_size:(index + 1) * batch_size],
             y: y_val[index * batch_size:(index + 1) * batch_size]
         }
     )
 
+    prediction = predict()
+    print prediction
 
 if __name__ == '__main__':
     test_mlp()
