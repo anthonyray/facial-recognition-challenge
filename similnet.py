@@ -253,12 +253,12 @@ def generate_pairs(label, n_pairs, positive_ratio, replace=False, random_state=4
             idx_diff = np.where(label != label[pairs_idx[i, 0]])[0]
             idx2 = rng.randint(idx_diff.shape[0])
             pairs_idx[i, 1] = idx_diff[idx2]
-    pairs_label = 2.0 * (label[pairs_idx[:, 0]] == label[pairs_idx[:, 1]]) #- 1.0
+    pairs_label = 2.0 * (label[pairs_idx[:, 0]] == label[pairs_idx[:, 1]]) - 1.0
     return pairs_idx, pairs_label.reshape(-1)
 
 
-def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=1000,
-                batch_size=10, n_hidden=50):
+def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=10000,
+                batch_size=20, n_hidden=500):
     """
     Demonstrate stochastic gradient descent optimization for a multilayer
     perceptron
@@ -291,7 +291,7 @@ def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=1000,
     print "Normalizing data"
     X = normalize(X)
 
-    n_train_pairs = 10000
+    n_train_pairs = 100000
     print "Generating " + str(n_train_pairs) + " training pairs."
     pairs_idx, y  = generate_pairs(labels, n_train_pairs, 0.5, replace=False, random_state=42)
 
@@ -500,6 +500,17 @@ def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=1000,
     print >> sys.stderr, ('The code for file ' +
                           os.path.split(__file__)[1] +
                           ' ran for %.2fm' % ((end_time - start_time) / 60.))
+
+    print "Predicting on the test set : "
+
+    predict = theano.function(
+        inputs=[index],
+        outputs=classifier.errors(y),
+        givens={
+            x: X_val[index * batch_size:(index + 1) * batch_size],
+            y: y_val[index * batch_size:(index + 1) * batch_size]
+        }
+    )
 
 
 if __name__ == '__main__':
