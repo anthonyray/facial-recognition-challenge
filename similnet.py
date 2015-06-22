@@ -452,6 +452,7 @@ def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=10000,
         for minibatch_index in xrange(n_train_batches):
 
             minibatch_avg_cost = train_model(minibatch_index)
+            print minibatch_avg_cost
             # iteration number
             iter = (epoch - 1) * n_train_batches + minibatch_index
 
