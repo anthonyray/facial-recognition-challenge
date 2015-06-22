@@ -517,7 +517,6 @@ def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=10000,
 
     test_facile = io.loadmat('data/data_test_facile.mat')
     X_test = test_facile['X']
-    y_test = test_facile['label']
     y_test = evaluate_model(X_test)
     np.savetxt('test.txt',y_test,fmt='%.5f')
 
