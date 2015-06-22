@@ -516,9 +516,12 @@ def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=10000,
     )
 
     test_facile = io.loadmat('data/data_test_facile.mat')
-    X_test = test_facile['X']
+    X___ = test_facile['X']
+    test_pairs = test_facile['pairs']
+
+    X_test = np.concatenate((X___[test_pairs[:,0],:],X___[test_pairs[:,1],:]),axis=1)
     y_test = evaluate_model(X_test)
-    np.savetxt('test.txt',y_test,fmt='%.5f')
+    np.savetxt('test.txt',y_test[:,0],fmt='%.5f')
 
 if __name__ == '__main__':
     test_mlp(n_hidden=100)
