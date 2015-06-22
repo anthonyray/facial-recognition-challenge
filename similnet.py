@@ -292,7 +292,7 @@ def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=10000,
     print "Normalizing data"
     X = normalize(X)
 
-    n_train_pairs = 300000 #60000
+    n_train_pairs = 6000
     print "Generating " + str(n_train_pairs) + " training pairs."
     pairs_idx, y  = generate_pairs(labels, n_train_pairs, 0.3, replace=False, random_state=42)
 
@@ -303,8 +303,8 @@ def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=10000,
     #pairs_val_idx, y_val = generate_pairs(labels, 1000 , 0.5, replace=False, random_state=45)  #10000
     #X_val = np.concatenate((X[pairs_val_idx[:,0],:],X[pairs_val_idx[:,1],:]),axis=1)
 
-    X_val = X_train[:50000]
-    y_val = y_train[:50000]
+    X_val = X_train[:1000]
+    y_val = y_train[:1000]
 
     X_train = X_train[50000:]
     y_train = y_train[50000:]
@@ -510,11 +510,15 @@ def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=10000,
     print "Predicting on the test set : "
 
     evaluate_model = theano.function(
-        inputs=[y],
-        outputs=y
+        inputs=[x],
+        outputs=classifier.logRegressionLayer.p_y_given_x
     )
 
-    print evaluate_model(y)
+    test_facile = io.loadmat('data/data_test_facile.mat')
+    X_test = test_facile['X']
+    y_test = test_facile['label']
+    y_test = evaluate_model(X_test)
+    np.savetxt('test.txt',y_test,fmt='%.5f')
 
 if __name__ == '__main__':
-    test_mlp(n_hidden=10000)
+    test_mlp(n_hidden=100)
