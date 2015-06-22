@@ -254,7 +254,7 @@ def generate_pairs(label, n_pairs, positive_ratio, replace=False, random_state=4
             idx_diff = np.where(label != label[pairs_idx[i, 0]])[0]
             idx2 = rng.randint(idx_diff.shape[0])
             pairs_idx[i, 1] = idx_diff[idx2]
-    pairs_label = 2.0 * (label[pairs_idx[:, 0]] == label[pairs_idx[:, 1]]) - 1.0
+    pairs_label = 2.0 * (label[pairs_idx[:, 0]] == label[pairs_idx[:, 1]]) #- 1.0
     return pairs_idx, pairs_label.reshape(-1)
 
 
