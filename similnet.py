@@ -300,8 +300,14 @@ def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=10000,
 
     X_train, X_test, y_train, y_test = train_test_split(X_,y,test_size=0.20)
 
-    pairs_val_idx, y_val = generate_pairs(labels, 1000 , 0.5, replace=False, random_state=45)  #10000
-    X_val = np.concatenate((X[pairs_val_idx[:,0],:],X[pairs_val_idx[:,1],:]),axis=1)
+    #pairs_val_idx, y_val = generate_pairs(labels, 1000 , 0.5, replace=False, random_state=45)  #10000
+    #X_val = np.concatenate((X[pairs_val_idx[:,0],:],X[pairs_val_idx[:,1],:]),axis=1)
+
+    X_val = X_train[:1000]
+    y_val = y_val[:1000]
+
+    X_train = X_train[1000:]
+    y_train = y_train[1000:]
 
     # compute number of minibatches for training, validation and testing
     n_train_batches = X_train.shape[0] / batch_size
