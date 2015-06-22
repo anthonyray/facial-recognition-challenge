@@ -259,7 +259,7 @@ def generate_pairs(label, n_pairs, positive_ratio, replace=False, random_state=4
 
 
 def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=10000,
-                batch_size=20, n_hidden=500):
+                batch_size=10, n_hidden=50):
     """
     Demonstrate stochastic gradient descent optimization for a multilayer
     perceptron
@@ -292,16 +292,15 @@ def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=10000,
     print "Normalizing data"
     X = normalize(X)
 
-    n_train_pairs = 60000 #60000
+    n_train_pairs = 6000 #60000
     print "Generating " + str(n_train_pairs) + " training pairs."
     pairs_idx, y  = generate_pairs(labels, n_train_pairs, 0.5, replace=False, random_state=42)
 
     X_ = np.concatenate((X[pairs_idx[:,0],:],X[pairs_idx[:,1],:]),axis=1)
 
-
     X_train, X_test, y_train, y_test = train_test_split(X_,y,test_size=0.20)
 
-    pairs_val_idx, y_val = generate_pairs(labels, 10000 , 0.5, replace=False, random_state=45)  #10000
+    pairs_val_idx, y_val = generate_pairs(labels, 1000 , 0.5, replace=False, random_state=45)  #10000
     X_val = np.concatenate((X[pairs_val_idx[:,0],:],X[pairs_val_idx[:,1],:]),axis=1)
 
     # compute number of minibatches for training, validation and testing
@@ -509,7 +508,7 @@ def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=10000,
         outputs=classifier.logRegressionLayer.p_y_given_x[0]
     )
 
-    print evaluate_model(x,y)
+    print classifier.logRegressionLayer.p_y_given_x[0].get_value(borrow=True)
 
 if __name__ == '__main__':
     test_mlp()
