@@ -292,8 +292,8 @@ def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=10000,
     print "Normalizing data"
     X = normalize(X)
 
-    n_train_pairs = 6000
-    n_val_pairs = 1000
+    n_train_pairs = 100000
+    n_val_pairs = 10000
     print "Generating " + str(n_train_pairs) + " training pairs."
     pairs_idx, y  = generate_pairs(labels, n_train_pairs, 0.3, replace=False, random_state=42)
 
@@ -521,7 +521,7 @@ def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=10000,
 
     X_test = np.concatenate((X___[test_pairs[:,0],:],X___[test_pairs[:,1],:]),axis=1)
     y_test = evaluate_model(X_test)
-    np.savetxt('test.txt',y_test[:,0],fmt='%.5f')
+    np.savetxt('test.txt',y_test[:,1],fmt='%.5f')
 
 if __name__ == '__main__':
     test_mlp(n_hidden=100)
